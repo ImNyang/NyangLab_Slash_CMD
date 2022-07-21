@@ -70,6 +70,6 @@ async def 길드(ctx):
     embed.add_field(name="🗄ㅣ파일 최대 용량", value=f"{filesize_limit} KIB", inline=True)
     embed.set_footer(text=f"{name}", icon_url=f"{icon_url}")
 
-    await ctx.send(embed=embed)
+    await ctx.respond(embed=embed)
 
 bot.run(str(os.getenv('TOKEN')))
