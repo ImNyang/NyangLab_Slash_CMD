@@ -30,7 +30,7 @@ async def 가위바위보(ctx, user: str):  # user:str로 !game 다음에 나오
         await ctx.respond(f'{user} vs {bot}  봇이 이겼습니다.')
 
 @bot.slash_command()
-async def 길드(self, ctx):
+async def 길드(ctx):
     g = ctx.guild
     name = g.name
     afk_voice = g.afk_channel
