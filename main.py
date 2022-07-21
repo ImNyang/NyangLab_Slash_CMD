@@ -1,6 +1,7 @@
 import discord
 import PingPongWr
 import random
+import os
 
 bot = discord.Bot()
 
@@ -71,4 +72,4 @@ async def 길드(self, ctx):
 
     await ctx.send(embed=embed)
 
-bot.run("OTY4NDUxMTA5Njg3NTQ1OTE3.G3sg77.uCZgXH1xYIxel0HqQ55LcSWFSn6N25JDR3xwWk")
+bot.run(str(os.getenv('TOKEN')))
