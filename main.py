@@ -31,7 +31,7 @@ async def 가위바위보(ctx, user: str):  # user:str로 !game 다음에 나오
         await ctx.respond(f'{user} vs {bot}  봇이 이겼습니다.')
 
 class Ping(discord.ui.View): # Create a class called View that subclasses discord.ui.View
-    @discord.ui.button(label="새로고침", style=discord.ButtonStyle.primary, emoji="🔄️") # Create a button with the label "😎 Click me!" with color Blurple
+    @discord.ui.button(label="새로고침", style=discord.ButtonStyle.primary, emoji="🔁") # Create a button with the label "😎 Click me!" with color Blurple
     async def button_callback(self, button, interaction):
         await interaction.response.send_message(f"🏓ㅣ`Pong! {round(round(bot.latency, 4)*1000)}ms`") # Send a message when the button is clicked
 
