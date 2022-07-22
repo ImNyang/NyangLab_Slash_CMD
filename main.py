@@ -39,5 +39,4 @@ class Ping(discord.ui.View): # Create a class called View that subclasses discor
 async def 핑(ctx):
     await ctx.respond(f"🏓ㅣ`Pong! {round(round(bot.latency, 4)*1000)}ms`", view=Ping()) # Send a message with our View class that contains the button
 
-
 bot.run(str(os.getenv('TOKEN')))
