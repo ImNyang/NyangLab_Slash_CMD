@@ -1,2 +1,2 @@
 py-cord==2.0.0
-PingPongWr==0.0.9
+PingPongTool==1.0.0

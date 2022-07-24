@@ -1,10 +1,15 @@
-from pydoc import describe
 import discord
-import PingPongWr
 import random
 import os
+from PingPongTool import PingPong  # 핑퐁툴 모듈 임포트
+from random import randint
 
 bot = discord.Bot()
+
+url = str(os.getenv('PINGPONG_URL'))  # 핑퐁빌더 Custom API URL
+pingpong_token = str(os.getenv('PINGPONG_TOKEN'))  # 핑퐁빌더 Custom API Token
+
+Ping = PingPong(url, pingpong_token)  # 핑퐁 모듈 클래스 선언
 
 @bot.event
 async def on_ready():
@@ -30,13 +35,19 @@ async def 가위바위보(ctx, user: str):  # user:str로 !game 다음에 나오
     else:
         await ctx.respond(f'{user} vs {bot}  봇이 이겼습니다.')
 
-class Ping(discord.ui.View): # Create a class called View that subclasses discord.ui.View
-    @discord.ui.button(label="새로고침", style=discord.ButtonStyle.primary, emoji="🔁") # Create a button with the label "😎 Click me!" with color Blurple
-    async def button_callback(self, button, interaction):
-        await interaction.response.send_message(f"🏓ㅣ`Pong! {round(round(bot.latency, 4)*1000)}ms`") # Send a message when the button is clicked
-
-@bot.slash_command() # Create a slash command
-async def 핑(ctx):
-    await ctx.respond(f"🏓ㅣ`Pong! {round(round(bot.latency, 4)*1000)}ms`", view=Ping()) # Send a message with our View class that contains the button
+def RandomColor():
+    return randint(0, 0xFFFFFF)
+@bot.command()
+async def 채팅(ctx, chat:str):
+    data = await Ping.Pong(ctx.author.id, chat, NoTopic=False)
+    embed = discord.Embed(
+        title="PingPong.us로 나온 결과!",
+        description=data['text'],
+        color=RandomColor()
+    )
+    embed.set_footer(text="Using PingPongTool")
+    if data['image'] is not None:
+        embed.set_image(url=data['image'])
+    await ctx.respond(embed=embed)
 
 bot.run(str(os.getenv('TOKEN')))
