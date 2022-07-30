@@ -19,7 +19,7 @@ async def on_ready():
 async def on_member_join(member):
     await member.send(f'{member.mention}님 서버에 오신 것을 환영합니다. 인증을 해 서버로 입장해주세요!')
 
-@bot.slash_command(guild_ids=[993042304325664791])
+@bot.slash_command()
 async def 안녕(ctx):
     await ctx.respond(f"Hello! World! `Pong! {round(round(bot.latency, 4)*1000)}ms`")
 
@@ -48,6 +48,13 @@ async def 채팅(ctx, chat:str):
     embed.set_footer(text="Using PingPongTool")
     if data['image'] is not None:
         embed.set_image(url=data['image'])
+    await ctx.respond(embed=embed)
+
+@bot.slash_command()
+async def httpcat(ctx, httperror:str):
+    embed=discord.Embed(title="meow")
+    embed.set_author(name="http.cat", url="https://http.cat")
+    embed.set_image(url=f"https://http.cat/{httperror}")
     await ctx.respond(embed=embed)
 
 bot.run(str(os.getenv('TOKEN')))
