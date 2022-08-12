@@ -52,7 +52,7 @@ async def 채팅(ctx, chat:str):
 
 @bot.slash_command()
 async def httpcat(ctx, httperror:str):
-    if httperror >= 600:
+    if httperror >= "600":
         embed=discord.Embed(title="real 404")
         embed.set_author(name="http.cat", url="https://http.cat")
         embed.set_image(url=f"https://http.cat/404")
