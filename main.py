@@ -52,9 +52,15 @@ async def 채팅(ctx, chat:str):
 
 @bot.slash_command()
 async def httpcat(ctx, httperror:str):
-    embed=discord.Embed(title="meow")
-    embed.set_author(name="http.cat", url="https://http.cat")
-    embed.set_image(url=f"https://http.cat/{httperror}")
-    await ctx.respond(embed=embed)
+    if httperror >= 600:
+        embed=discord.Embed(title="real 404")
+        embed.set_author(name="http.cat", url="https://http.cat")
+        embed.set_image(url=f"https://http.cat/404")
+        await ctx.respond(embed=embed)
+    else:
+        embed=discord.Embed(title="meow")
+        embed.set_author(name="http.cat", url="https://http.cat")
+        embed.set_image(url=f"https://http.cat/{httperror}")
+        await ctx.respond(embed=embed)
 
 bot.run(str(os.getenv('TOKEN')))
