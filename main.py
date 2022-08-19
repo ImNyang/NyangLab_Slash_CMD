@@ -96,7 +96,7 @@ async def 멜론차트(ctx, top:int):
 
         for b in artists:
             album.append(b.find('a').text)
-        embed = discord.Embed(title=f"멜론차트 Top {top}", description=f"Top {top}의 차트를 모두 불러왔습니다.", color=, timestamp=,)
+        embed = discord.Embed(title=f"멜론차트 Top {top}", description=f"Top {top}의 차트를 모두 불러왔습니다.")
         for r in range(top):
             embed.add_field(name=f"{r+1}위", value=f"{title[r]} - {artist[r]} - {album[r]}")
         await ctx.response(embed=embed)
