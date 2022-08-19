@@ -3,18 +3,9 @@ import random
 import os
 from PingPongTool import PingPong  # 핑퐁툴 모듈 임포트
 from random import randint
-import requests
-from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
-
-ua = UserAgent(verify_ssl=False)
-headers = {'user-agent':ua.chrome}
-
-top100_url = "https://www.melon.com/chart/index.htm"
-response = requests.get(top100_url, headers = headers)
-html = response.text
-
-soup = BeautifulSoup(html, "lxml")
+from urllib.request import urlopen, Request
+import urllib
+import bs4
  
 bot = discord.Bot()
 
@@ -75,29 +66,16 @@ async def httpcat(ctx, httperror:str):
         embed.set_image(url=f"https://http.cat/{httperror}")
         await ctx.respond(embed=embed)
 
-@bot.slash_command(description="현재 멜론 차트를 출력합니다. (테러 방지로 최대 TOP 50)")
-async def 멜론차트(ctx, top:int):
-    if top > 50:
-        await ctx.respond(embed=discord.Embed(title="죄송합니다! 테러 방지를 위해 TOP 50이상은 막았습니다."))
-    else:
-        titles = soup.find_all("div", {"class":"ellipsis rank01"})
-        artists = soup.find_all("div", {"class":"ellipsis rank02"})
-        albums = soup.find_all("div", {"class":"ellipsis rank03"})
+@bot.slash_command(description="날씨를 알려줍니다. 어디인지는 네이버 검색어로 판단합니다.")
+async def 날씨(ctx, location:str):
+    enc_location = urllib.parse.quote(location + '+날씨')
 
-        title=[]
-        artist = []
-        album = []
+    url = 'https://search.naver.com/search.naver?ie=utf8&query='+ enc_location
 
-        for t in titles:
-            title.append(t.find('a').text)
+    req = Request(url)
+    page = urlopen(req)
+    html = page.read()
+    soup = bs4.BeautifulSoup(html,'html5lib')
+    await ctx.respond('현재 ' + location + ' 날씨는 ' + soup.find('p', class_='info_temperature').find('span', class_='todaytemp').text + '도 입니다.')
 
-        for a in artists:
-            artist.append(a.find('a').text)
-
-        for b in artists:
-            album.append(b.find('a').text)
-        embed = discord.Embed(title=f"멜론차트 Top {top}", description=f"Top {top}의 차트를 모두 불러왔습니다.")
-        for r in range(top):
-            embed.add_field(name=f"{r+1}위", value=f"{title[r]} - {artist[r]} - {album[r]}")
-        await ctx.response(embed=embed)
 bot.run(str(os.getenv('TOKEN')))
