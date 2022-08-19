@@ -8,8 +8,8 @@ from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 
 ua = UserAgent()
-headers = {'user-agent':ua.chrome}
-
+headers = {'user-agent':ua.firefox} # 유저에 따라 다를 수 있음 꼭 수정 바람
+ 
 top100_url = "https://www.melon.com/chart/index.htm"
 response = requests.get(top100_url, headers = headers)
 html = response.text
